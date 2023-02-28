@@ -12,7 +12,7 @@ import { Header } from "../../components";
 const DefaultLayout = () => {
   const title = "Podcaster";
 
-  const { podcasts, setPodcasts, setIsLoadingPodcasts } =
+  const { podcasts, setPodcasts, setIsLoadingPodcasts, isLoadingEpisode } =
     useContext(InfoContext);
 
   const { isLoading, data = [] } = useFetch(
@@ -35,7 +35,7 @@ const DefaultLayout = () => {
 
   return (
     <Container>
-      <Header title={title} isLoading={isLoading} />
+      <Header title={title} isLoading={isLoading || isLoadingEpisode} />
       <Outlet />
     </Container>
   );

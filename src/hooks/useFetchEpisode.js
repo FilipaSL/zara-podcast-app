@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import useFetch from "react-fetch-hook";
 
 //context
 import { InfoContext } from "../helpers/InfoContext";
 
 const useFetchEpisode = (podcastId) => {
-  const { episodes, setEpisodes } = useContext(InfoContext);
+  const { episodes, setEpisodes, setIsLoadingEpisode } =
+    useContext(InfoContext);
 
-  let episode =
-    episodes?.find((elem) => podcastId == `${elem.collectionId}`) || null;
+  let episode = episodes ? episodes[`${podcastId}`] ?? null : null;
 
   const { isLoading, data = [] } = useFetch(
     `https://api.allorigins.win/get?url=${encodeURIComponent(
@@ -20,11 +20,22 @@ const useFetchEpisode = (podcastId) => {
   );
 
   if (!isLoading && data?.contents && episode === null) {
-    setEpisodes({ ...episodes, episode });
+    const dataResults = JSON.parse(data.contents).results;
+
+    const newEpisode = {
+      [dataResults[0].collectionId]: [...dataResults],
+    };
+    setIsLoadingEpisode(isLoading);
+    setEpisodes({ ...episodes, ...newEpisode });
   }
 
   const isLoadingEpisodes = isLoading;
-  return [isLoadingEpisodes];
+
+  const episodeData = episode
+    ? episode
+    : JSON.parse(data?.contents || JSON.stringify({ results: null }))?.results;
+
+  return [episodeData, isLoadingEpisodes];
 };
 
 export default useFetchEpisode;

@@ -20,7 +20,7 @@ function useLocalStorage(key, timestampKey, initialValue) {
 
   const setValue = (value) => {
     setStoredValue(value);
-    localStorage.setItem("timestamp", new Date());
+    localStorage.setItem(timestampKey, new Date());
     localStorage.setItem(key, JSON.stringify(value));
   };
   return [storedValue, setValue];

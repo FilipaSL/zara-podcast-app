@@ -16,7 +16,11 @@ export const InfoProvider = ({ children }) => {
   const [isLoadingPodcasts, setIsLoadingPodcasts] = useState(!podcasts);
 
   //episodes
-  const [episodes, setEpisodes] = useLocalStorage("episodes", null);
+  const [episodes, setEpisodes] = useLocalStorage(
+    "episodes",
+    "episodesTimestamp",
+    null
+  );
   const [isLoadingEpisode, setIsLoadingEpisode] = useState(!episodes);
 
   //context values
