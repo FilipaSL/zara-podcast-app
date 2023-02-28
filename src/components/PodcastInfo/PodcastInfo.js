@@ -1,29 +1,32 @@
 import React from "react";
 
 import {
-  ContentContainer,
   ImgContainer,
   InfoContainer,
-  TextContainer,
+  TopContainer,
+  TitleContainer,
+  DescriptionContainer,
   Title,
   Subtitle,
+  InfoTitle,
+  InfoSubtitle,
 } from "./styles";
 
-const PodcastInfo = ({ title, subtitle, image, description }) => {
+const PodcastInfo = ({ title, subtitle, route, image, description }) => {
   return (
-    <ContentContainer>
-      <ImgContainer src={image} alt="logo" />
-      <TextContainer>
-        <Title>{title}</Title>
-        <Subtitle>{subtitle}</Subtitle>
-      </TextContainer>
-      <InfoContainer>
-        <TextContainer>
-          <Title>Description</Title>
-          <Subtitle>{description}</Subtitle>
-        </TextContainer>
-      </InfoContainer>
-    </ContentContainer>
+    <InfoContainer>
+      <TopContainer href={route}>
+        <ImgContainer src={image} alt="logo" />
+        <TitleContainer>
+          <Title>{title}</Title>
+          <Subtitle>by: {subtitle}</Subtitle>
+        </TitleContainer>
+      </TopContainer>
+      <DescriptionContainer>
+        <InfoTitle>Description</InfoTitle>
+        <InfoSubtitle>{description}</InfoSubtitle>
+      </DescriptionContainer>
+    </InfoContainer>
   );
 };
 

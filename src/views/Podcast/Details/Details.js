@@ -1,75 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 //components
-import { CardItem, Search } from "../../../components";
-
+import { PodcastInfo, EpisodesList } from "../../../components";
 // External libraries
 import { CircularProgress } from "@mui/material";
 
 //hooks
 import useFetch from "react-fetch-hook";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 //styles
-import { WrapperContainer, ContentContainer, ItemsContainer } from "./styles";
+import { ContentContainer, InfoContainer } from "../styles";
 
-const Details = (id) => {
-  const [displayItems, setDisplayItems] = useState(null);
-  const { podcastId } = useLocation;
+//context
+import { InfoContext } from "../../../helpers/InfoContext";
+
+const Details = () => {
+  const [podcasts, setPodcasts] = useState(null);
+  const { podcastId } = useParams();
+
+  const stateValues = useContext(InfoContext);
+
   const { isLoading, data = [] } = useFetch(
-    `https://
-    itunes.apple.com/lookup?id=${podcastId}
+    `https://api.allorigins.win/get?url=${encodeURIComponent(
+      `https://itunes.apple.com/lookup?id=${podcastId}&entity=podcastEpisode`
     )}`,
     {
-      depends: [displayItems === null],
+      depends: [podcasts === null],
     }
   );
 
-  const formatDisplayItems = (dataEntries) => {
-    setDisplayItems(
-      dataEntries.map((entryItem, index) => (
-        <ItemsContainer key={index} item xs="auto">
-          <CardItem
-            title={entryItem["im:name"].label}
-            subtitle={entryItem["im:artist"].label}
-            image={entryItem["im:image"][0].label}
-          />
-        </ItemsContainer>
-      ))
-    );
-  };
+  if (!isLoading && data?.contents && podcasts === null) {
+    const dataResults = JSON.parse(data.contents).results;
 
-  const searchFilter = (value) => {
-    if (data?.contents) {
-      const { entry } = JSON.parse(data.contents).feed;
+    const podcast = stateValues.podcasts.find((pod) => {
+      return pod.id.attributes["im:id"] == `${dataResults[0].collectionId}`;
+    });
 
-      const filteredEntries = entry.filter(
-        (item) =>
-          item["im:name"].label.toLowerCase().includes(value.toLowerCase()) ||
-          item["im:artist"].label.toLowerCase().includes(value.toLowerCase())
-      );
+    const podcastDetails = {
+      infoDetails: {
+        collectionName: dataResults[0].collectionName,
+        artistName: dataResults[0].artistName,
+        artworkUrl600: dataResults[0].artworkUrl600,
+        description: podcast.summary?.label,
+      },
+      episodesList: dataResults,
+    };
 
-      formatDisplayItems(filteredEntries);
-    }
-  };
-
-  if (!isLoading && data?.contents && displayItems === null) {
-    const { entry } = JSON.parse(data.contents).feed;
-
-    formatDisplayItems(entry);
+    setPodcasts(podcastDetails);
   }
 
   return (
-    <WrapperContainer>
-      <Search
-        numberOfResults={displayItems?.length | 0}
-        searchFilter={searchFilter}
-      />
+    <>
       {isLoading && <CircularProgress />}
       {!isLoading && (
-        <ContentContainer container>{displayItems || {}}</ContentContainer>
+        <ContentContainer container>
+          <InfoContainer item xs={4}>
+            <PodcastInfo
+              title={podcasts ? podcasts.infoDetails.collectionName : ""}
+              subtitle={podcasts ? podcasts.infoDetails.artistName : ""}
+              image={podcasts ? podcasts.infoDetails.artworkUrl600 : ""}
+              description={podcasts ? podcasts.infoDetails.description : ""}
+            />
+          </InfoContainer>
+          <InfoContainer item xs={8}>
+            <EpisodesList
+              episodesList={podcasts?.episodesList || []}
+            ></EpisodesList>
+          </InfoContainer>
+        </ContentContainer>
       )}
-    </WrapperContainer>
+    </>
   );
 };
 export default Details;

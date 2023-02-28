@@ -1,65 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 //components
 import { CardItem, Search } from "../../components";
 
-// External libraries
-import { CircularProgress } from "@mui/material";
-
-//hooks
-import useFetch from "react-fetch-hook";
-
 //styles
 import { WrapperContainer, ContentContainer, ItemsContainer } from "./styles";
+import { InfoContext } from "../../helpers/InfoContext";
 
 const Main = () => {
-  const [displayItems, setDisplayItems] = useState(null);
-
-  const { isLoading, data = [] } = useFetch(
-    `https://api.allorigins.win/get?url=${encodeURIComponent(
-      "https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json"
-    )}`,
-    {
-      depends: [displayItems === null],
-    }
-  );
+  const { podcasts, isLoadingPodcasts } = useContext(InfoContext);
 
   const formatDisplayItems = (dataEntries) => {
-    console.log(dataEntries[0].id.attributes["im:id"]);
-    setDisplayItems(
-      dataEntries.map((entryItem, index) => (
-        <ItemsContainer key={index} item xs="auto">
-          <CardItem
-            id={entryItem.id.attributes["im:id"]}
-            title={entryItem["im:name"].label}
-            subtitle={entryItem["im:artist"].label}
-            image={entryItem["im:image"][0].label}
-            onClick={() => {}}
-          />
-        </ItemsContainer>
-      ))
-    );
+    return dataEntries
+      ? dataEntries.map((entryItem, index) => (
+          <ItemsContainer key={index} item xs="auto">
+            <CardItem
+              id={entryItem.id.attributes["im:id"]}
+              title={entryItem["im:name"].label}
+              subtitle={entryItem["im:artist"].label}
+              image={entryItem["im:image"][0].label}
+              onClick={() => {}}
+            />
+          </ItemsContainer>
+        ))
+      : null;
   };
 
-  const searchFilter = (value) => {
-    if (data?.contents) {
-      const { entry } = JSON.parse(data.contents).feed;
+  let [displayItems, setItems] = useState(formatDisplayItems(podcasts));
 
-      const filteredEntries = entry.filter(
+  const searchFilter = (value) => {
+    if (podcasts) {
+      const filteredEntries = podcasts.filter(
         (item) =>
           item["im:name"].label.toLowerCase().includes(value.toLowerCase()) ||
           item["im:artist"].label.toLowerCase().includes(value.toLowerCase())
       );
 
-      formatDisplayItems(filteredEntries);
+      setItems(formatDisplayItems(filteredEntries));
     }
   };
 
-  if (!isLoading && data?.contents && displayItems === null) {
-    const { entry } = JSON.parse(data.contents).feed;
-
-    formatDisplayItems(entry);
-  }
+  useEffect(() => {
+    setItems(formatDisplayItems(podcasts));
+  }, [isLoadingPodcasts]);
 
   return (
     <WrapperContainer>
@@ -67,10 +50,8 @@ const Main = () => {
         numberOfResults={displayItems?.length | 0}
         searchFilter={searchFilter}
       />
-      {isLoading && <CircularProgress />}
-      {!isLoading && (
-        <ContentContainer container>{displayItems || {}}</ContentContainer>
-      )}
+
+      <ContentContainer container>{displayItems || <></>}</ContentContainer>
     </WrapperContainer>
   );
 };

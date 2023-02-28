@@ -1,5 +1,8 @@
 import React from "react";
+import Linkify from "react-linkify";
+import ReactAudioPlayer from "react-audio-player";
 
+//styles
 import {
   ContentContainer,
   PlayerContainer,
@@ -13,9 +16,13 @@ const EpisodePlayer = ({ title, description, sound }) => {
     <ContentContainer>
       <TextContainer>
         <Title>{title}</Title>
-        <Subtitle>{description}</Subtitle>
+        <Subtitle>
+          <Linkify>{description}</Linkify>
+        </Subtitle>
       </TextContainer>
-      <PlayerContainer></PlayerContainer>
+      <PlayerContainer>
+        <ReactAudioPlayer src={sound} controls></ReactAudioPlayer>
+      </PlayerContainer>
     </ContentContainer>
   );
 };

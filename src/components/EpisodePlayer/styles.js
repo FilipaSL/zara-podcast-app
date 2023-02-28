@@ -4,39 +4,40 @@ import styled from "styled-components";
 // external components
 import { Card } from "@mui/material";
 
-const cardWidth = "15vw";
+const cardWidth = "70vw";
 
-export const ContentContainer = styled.div`
+export const ContentContainer = styled(Card)`
   display: flex;
-  position: relative;
+  flex-direction: column;
   margin: 2rem 1rem;
-  align-content: center;
-  height: fit-content;
-  width: fit-content;
-`;
-
-export const InfoContainer = styled(Card)`
-  height: calc(${cardWidth} / 2);
   width: ${cardWidth};
-  z-index: 1;
+  height: fit-content;
 `;
 
 export const TextContainer = styled.div`
-  padding: calc(${cardWidth} / 6) 1vw 1vw 1vw;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5vw;
-  align-items: center;
+  gap: 3vh;
+  align-items: flex-start;
+  padding: 2vh 2vw;
 `;
 
 export const PlayerContainer = styled.div``;
 
 export const Title = styled.div`
-  font-size: calc(${cardWidth} / 15); ;
+  font-size: 3vh;
+  font-weight: 700;
 `;
+
 export const Subtitle = styled.div`
   color: grey;
-  font-size: calc(${cardWidth} / 18); ;
+  font-size: 2vh;
+  font-style: italic;
+
+  & a {
+    color: #2f76b3;
+    font-weight: 450;
+    text-decoration: none;
+  }
 `;

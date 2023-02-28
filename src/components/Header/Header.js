@@ -1,9 +1,17 @@
 import React from "react";
 
-import { HeaderContainer } from "./styles";
+// External libraries
+import { CircularProgress } from "@mui/material";
 
-const Header = ({ title }) => {
-  return <HeaderContainer>{title}</HeaderContainer>;
+import { HeaderContainer, HeaderTitle } from "./styles";
+
+const Header = ({ title, isLoading }) => {
+  return (
+    <HeaderContainer>
+      <HeaderTitle href="/">{title}</HeaderTitle>{" "}
+      <>{isLoading && <CircularProgress size={18} />}</>
+    </HeaderContainer>
+  );
 };
 
 export default Header;

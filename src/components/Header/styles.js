@@ -5,11 +5,18 @@ import styled from "styled-components";
 import { Container } from "@mui/material";
 
 export const HeaderContainer = styled(Container)`
-  display: flex;
+  display: flex !important;
+  flex-direction: row;
+  justify-content: space-between;
   margin: 3vh 0 1vh 0;
   padding-bottom: 2vh;
-  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid lightGrey;
+`;
+
+export const HeaderTitle = styled.a`
   color: #2f76b3;
   font-weight: 700;
-  border-bottom: 1px solid lightGrey;
+
+  text-decoration: none;
 `;
