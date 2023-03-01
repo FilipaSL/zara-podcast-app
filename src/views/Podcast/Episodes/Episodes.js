@@ -46,7 +46,7 @@ const Episodes = () => {
   }
 
   return (
-    <ContentContainer container>
+    <ContentContainer container data-testid="podcastEpisodes">
       <InfoContainer item xs={4}>
         <PodcastInfo
           title={episode ? episode.infoDetails.collectionName : ""}

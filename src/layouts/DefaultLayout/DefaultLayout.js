@@ -47,7 +47,7 @@ const DefaultLayout = () => {
   }, [isLoadingEpisodes]);
 
   return (
-    <Container>
+    <Container data-testid="layout">
       <Header title={title} isLoading={isLoading || isLoadingEpisode} />
       <Outlet />
     </Container>

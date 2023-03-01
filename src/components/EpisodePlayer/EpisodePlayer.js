@@ -13,14 +13,14 @@ import {
 
 const EpisodePlayer = ({ title, description, sound }) => {
   return (
-    <ContentContainer>
-      <TextContainer>
+    <ContentContainer data-testid="infoPlayer">
+      <TextContainer data-testid="textTitle">
         <Title>{title}</Title>
         <Subtitle>
           <Linkify>{description}</Linkify>
         </Subtitle>
       </TextContainer>
-      <PlayerContainer>
+      <PlayerContainer data-testid="player">
         <ReactAudioPlayer src={sound} controls></ReactAudioPlayer>
       </PlayerContainer>
     </ContentContainer>

@@ -18,7 +18,7 @@ const CardItem = ({ id, title, subtitle, image }) => {
   };
 
   return (
-    <ContentContainer key={`${id}`} onClick={handleClick}>
+    <ContentContainer key={`${id}`} data-testid="card" onClick={handleClick}>
       <ImgContainer src={image} alt="logo" />
       <InfoContainer>
         <TextContainer>

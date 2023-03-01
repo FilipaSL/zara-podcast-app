@@ -14,15 +14,15 @@ import {
 
 const PodcastInfo = ({ title, subtitle, route, image, description }) => {
   return (
-    <InfoContainer>
-      <TopContainer href={route}>
-        <ImgContainer src={image} alt="logo" />
-        <TitleContainer>
+    <InfoContainer data-testid="podcastInfo">
+      <TopContainer data-testid="containerRoute" href={route}>
+        <ImgContainer data-testid="image" src={image} alt="logo" />
+        <TitleContainer data-testid="containerTitle">
           <Title>{title}</Title>
           <Subtitle>by: {subtitle}</Subtitle>
         </TitleContainer>
       </TopContainer>
-      <DescriptionContainer>
+      <DescriptionContainer data-testid="descriptionContainer">
         <InfoTitle>Description</InfoTitle>
         <InfoSubtitle>{description}</InfoSubtitle>
       </DescriptionContainer>

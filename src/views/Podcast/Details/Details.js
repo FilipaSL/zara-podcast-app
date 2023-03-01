@@ -5,7 +5,6 @@ import { PodcastInfo, EpisodesList } from "../../../components";
 
 //hooks
 import { useParams } from "react-router-dom";
-import useFetchEpisode from "../../../hooks/useFetchEpisode";
 
 //styles
 import { ContentContainer, InfoContainer } from "../styles";
@@ -40,32 +39,24 @@ const Details = () => {
   }
 
   return (
-    <ContentContainer container>
-      {podcastDetails && (
-        <InfoContainer item xs={4}>
-          <PodcastInfo
-            title={
-              podcastDetails ? podcastDetails.infoDetails.collectionName : ""
-            }
-            subtitle={
-              podcastDetails ? podcastDetails.infoDetails.artistName : ""
-            }
-            image={
-              podcastDetails ? podcastDetails.infoDetails.artworkUrl600 : ""
-            }
-            description={
-              podcastDetails ? podcastDetails.infoDetails.description : ""
-            }
-          />
-        </InfoContainer>
-      )}
-      {podcastDetails && (
-        <InfoContainer item xs={8}>
-          <EpisodesList
-            episodesList={podcastDetails?.episodesList || []}
-          ></EpisodesList>
-        </InfoContainer>
-      )}
+    <ContentContainer container data-testid="podcastDetails">
+      <InfoContainer item xs={4}>
+        <PodcastInfo
+          title={
+            podcastDetails ? podcastDetails.infoDetails.collectionName : ""
+          }
+          subtitle={podcastDetails ? podcastDetails.infoDetails.artistName : ""}
+          image={podcastDetails ? podcastDetails.infoDetails.artworkUrl600 : ""}
+          description={
+            podcastDetails ? podcastDetails.infoDetails.description : ""
+          }
+        />
+      </InfoContainer>
+      <InfoContainer item xs={8}>
+        <EpisodesList
+          episodesList={podcastDetails?.episodesList || []}
+        ></EpisodesList>
+      </InfoContainer>
     </ContentContainer>
   );
 };

@@ -19,7 +19,6 @@ const Main = () => {
               title={entryItem["im:name"].label}
               subtitle={entryItem["im:artist"].label}
               image={entryItem["im:image"][0].label}
-              onClick={() => {}}
             />
           </ItemsContainer>
         ))
@@ -45,7 +44,7 @@ const Main = () => {
   }, [isLoadingPodcasts]);
 
   return (
-    <WrapperContainer>
+    <WrapperContainer data-testid="main">
       <Search
         numberOfResults={displayItems?.length | 0}
         searchFilter={searchFilter}

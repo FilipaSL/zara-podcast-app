@@ -8,9 +8,12 @@ import { SearchContainer, ResultsContainer } from "./styles";
 const Search = ({ numberOfResults, searchFilter }) => {
   return (
     <SearchContainer>
-      <ResultsContainer>{numberOfResults}</ResultsContainer>
+      <ResultsContainer data-testid="results">
+        {numberOfResults}
+      </ResultsContainer>
       <Input
         type="text"
+        data-testid="search"
         placeholder="Filter podcasts ..."
         onChange={(event) => searchFilter(event.target.value)}
       />

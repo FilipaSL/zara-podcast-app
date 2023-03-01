@@ -1,11 +1,10 @@
 import { useState } from "react";
 
-// Hook
 function useLocalStorage(key, timestampKey, initialValue) {
   const ONE_DAY = 24 * 60 * 60 * 1000; // number of milliseconds in one day
 
   const [storedValue, setStoredValue] = useState(() => {
-    const item = window.localStorage.getItem(key);
+    const item = localStorage.getItem(key);
     const timestamp = localStorage.getItem(timestampKey);
 
     if (item && timestamp) {

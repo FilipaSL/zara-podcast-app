@@ -23,7 +23,11 @@ export const TextContainer = styled.div`
   padding: 2vh 2vw;
 `;
 
-export const PlayerContainer = styled.div``;
+export const PlayerContainer = styled.div`
+  align-items: center;
+  justify-content-center;
+  margin: 1vh 1vw;
+`;
 
 export const Title = styled.div`
   font-size: 3vh;

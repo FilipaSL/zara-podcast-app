@@ -38,9 +38,11 @@ const EpisodesList = ({ episodesList = [] }) => {
   });
 
   return (
-    <ContentContainer>
-      <HeaderContainer> Episodes: {episodesList.length - 1}</HeaderContainer>
-      <InfoContainer>
+    <ContentContainer data-testid="list">
+      <HeaderContainer data-testid="episodesNumber">
+        Episodes: {episodesList.length - 1}
+      </HeaderContainer>
+      <InfoContainer data-testid="infoTable">
         <StyledTableContainer>
           <Table stickyHeader>
             <TableHead>
@@ -54,8 +56,6 @@ const EpisodesList = ({ episodesList = [] }) => {
           </Table>
         </StyledTableContainer>
       </InfoContainer>
-
-      {/* <PlayerContainer></PlayerContainer> */}
     </ContentContainer>
   );
 };

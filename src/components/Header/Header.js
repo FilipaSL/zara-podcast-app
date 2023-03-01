@@ -7,9 +7,9 @@ import { HeaderContainer, HeaderTitle } from "./styles";
 
 const Header = ({ title, isLoading }) => {
   return (
-    <HeaderContainer>
-      <HeaderTitle href="/">{title}</HeaderTitle>{" "}
-      <>{isLoading && <CircularProgress size={18} />}</>
+    <HeaderContainer data-testid="header">
+      <HeaderTitle href="/">{title}</HeaderTitle>
+      <>{isLoading && <CircularProgress data-testid="loading" size={18} />}</>
     </HeaderContainer>
   );
 };
