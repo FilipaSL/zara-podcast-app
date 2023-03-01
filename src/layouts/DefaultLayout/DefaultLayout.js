@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Outlet } from "react-router-dom";
 import useFetch from "react-fetch-hook";
+import { useParams } from "react-router-dom";
 
 //context
 import { InfoContext } from "../../helpers/InfoContext";
@@ -8,11 +9,13 @@ import { InfoContext } from "../../helpers/InfoContext";
 // external components
 import { Container } from "@mui/material";
 import { Header } from "../../components";
+import useFetchEpisode from "../../hooks/useFetchEpisode";
 
 const DefaultLayout = () => {
   const title = "Podcaster";
+  const { podcastId } = useParams();
 
-  const { podcasts, setPodcasts, setIsLoadingPodcasts, isLoadingEpisode } =
+  const { podcasts, setPodcasts, episodes, setEpisodes, isLoadingEpisode } =
     useContext(InfoContext);
 
   const { isLoading, data = [] } = useFetch(
@@ -24,14 +27,24 @@ const DefaultLayout = () => {
     }
   );
 
+  const [episodeData, isLoadingEpisodes] = useFetchEpisode(podcastId ?? null);
+
   useEffect(() => {
     if (!isLoading && data?.contents) {
       const { entry } = JSON.parse(data.contents).feed;
-      setIsLoadingPodcasts(false);
-
       setPodcasts(entry);
     }
   }, [isLoading, data]);
+
+  useEffect(() => {
+    if (!isLoadingEpisodes && episodeData) {
+      const newEpisode = {
+        [episodeData[0].collectionId]: [...episodeData],
+      };
+
+      setEpisodes({ ...episodes, ...newEpisode });
+    }
+  }, [isLoadingEpisodes]);
 
   return (
     <Container>

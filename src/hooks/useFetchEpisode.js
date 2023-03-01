@@ -5,8 +5,7 @@ import useFetch from "react-fetch-hook";
 import { InfoContext } from "../helpers/InfoContext";
 
 const useFetchEpisode = (podcastId) => {
-  const { episodes, setEpisodes, setIsLoadingEpisode } =
-    useContext(InfoContext);
+  const { episodes, setIsLoadingEpisode } = useContext(InfoContext);
 
   let episode = episodes ? episodes[`${podcastId}`] ?? null : null;
 
@@ -15,27 +14,22 @@ const useFetchEpisode = (podcastId) => {
       `https://itunes.apple.com/lookup?id=${podcastId}&entity=podcastEpisode`
     )}`,
     {
-      depends: [episode === null],
+      depends: [episode === null && podcastId != null],
     }
   );
 
-  if (!isLoading && data?.contents && episode === null) {
-    const dataResults = JSON.parse(data.contents).results;
+  if (isLoading && podcastId != null && episode === null)
+    setIsLoadingEpisode(true);
 
-    const newEpisode = {
-      [dataResults[0].collectionId]: [...dataResults],
-    };
-    setIsLoadingEpisode(isLoading);
-    setEpisodes({ ...episodes, ...newEpisode });
+  if (podcastId != null && !isLoading && data !== null) {
+    setIsLoadingEpisode(false);
   }
-
-  const isLoadingEpisodes = isLoading;
 
   const episodeData = episode
     ? episode
     : JSON.parse(data?.contents || JSON.stringify({ results: null }))?.results;
 
-  return [episodeData, isLoadingEpisodes];
+  return [episodeData, isLoading];
 };
 
 export default useFetchEpisode;

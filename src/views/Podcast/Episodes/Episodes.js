@@ -5,20 +5,20 @@ import { PodcastInfo, EpisodePlayer } from "../../../components";
 
 //hooks
 import { useParams } from "react-router-dom";
+import useFetchEpisode from "../../../hooks/useFetchEpisode";
 
 //styles
 import { ContentContainer, InfoContainer } from "../styles";
 
 //context
 import { InfoContext } from "../../../helpers/InfoContext";
-import useFetchEpisode from "../../../hooks/useFetchEpisode";
 
 const Episodes = () => {
   const [episode, setEpisode] = useState(null);
+
   const { podcastId, episodeId } = useParams();
 
   const stateValues = useContext(InfoContext);
-
   const [episodeData, isLoadingEpisodes] = useFetchEpisode(podcastId);
 
   if (!isLoadingEpisodes && episodeData && episode === null) {

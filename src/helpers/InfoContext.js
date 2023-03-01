@@ -21,7 +21,8 @@ export const InfoProvider = ({ children }) => {
     "episodesTimestamp",
     null
   );
-  const [isLoadingEpisode, setIsLoadingEpisode] = useState(!episodes);
+
+  const [isLoadingEpisode, setIsLoadingEpisode] = useState(false);
 
   //context values
   const stateValues = {

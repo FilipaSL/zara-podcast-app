@@ -2,12 +2,10 @@ import React, { useState, useContext } from "react";
 
 //components
 import { PodcastInfo, EpisodesList } from "../../../components";
-// External libraries
-import { CircularProgress } from "@mui/material";
 
 //hooks
-import useFetch from "react-fetch-hook";
 import { useParams } from "react-router-dom";
+import useFetchEpisode from "../../../hooks/useFetchEpisode";
 
 //styles
 import { ContentContainer, InfoContainer } from "../styles";
@@ -16,61 +14,59 @@ import { ContentContainer, InfoContainer } from "../styles";
 import { InfoContext } from "../../../helpers/InfoContext";
 
 const Details = () => {
-  const [podcasts, setPodcasts] = useState(null);
+  let podcastDetails = null;
+
   const { podcastId } = useParams();
+  const { episodes, podcasts } = useContext(InfoContext);
 
-  const stateValues = useContext(InfoContext);
+  let episodeData = episodes ? episodes[`${podcastId}`] ?? null : null;
 
-  const { isLoading, data = [] } = useFetch(
-    `https://api.allorigins.win/get?url=${encodeURIComponent(
-      `https://itunes.apple.com/lookup?id=${podcastId}&entity=podcastEpisode`
-    )}`,
-    {
-      depends: [podcasts === null],
-    }
-  );
+  if (episodeData && podcastDetails === null) {
+    let episodesInfo = episodeData[0];
 
-  if (!isLoading && data?.contents && podcasts === null) {
-    const dataResults = JSON.parse(data.contents).results;
-
-    const podcast = stateValues.podcasts.find((pod) => {
-      return pod.id.attributes["im:id"] == `${dataResults[0].collectionId}`;
+    const podcast = podcasts.find((pod) => {
+      return pod.id.attributes["im:id"] == `${episodesInfo.collectionId}`;
     });
 
-    const podcastDetails = {
+    podcastDetails = {
       infoDetails: {
-        collectionName: dataResults[0].collectionName,
-        artistName: dataResults[0].artistName,
-        artworkUrl600: dataResults[0].artworkUrl600,
+        collectionName: episodesInfo.collectionName,
+        artistName: episodesInfo.artistName,
+        artworkUrl600: episodesInfo.artworkUrl600,
         description: podcast.summary?.label,
       },
-      episodesList: dataResults,
+      episodesList: episodeData,
     };
-
-    setPodcasts(podcastDetails);
   }
 
   return (
-    <>
-      {isLoading && <CircularProgress />}
-      {!isLoading && (
-        <ContentContainer container>
-          <InfoContainer item xs={4}>
-            <PodcastInfo
-              title={podcasts ? podcasts.infoDetails.collectionName : ""}
-              subtitle={podcasts ? podcasts.infoDetails.artistName : ""}
-              image={podcasts ? podcasts.infoDetails.artworkUrl600 : ""}
-              description={podcasts ? podcasts.infoDetails.description : ""}
-            />
-          </InfoContainer>
-          <InfoContainer item xs={8}>
-            <EpisodesList
-              episodesList={podcasts?.episodesList || []}
-            ></EpisodesList>
-          </InfoContainer>
-        </ContentContainer>
+    <ContentContainer container>
+      {podcastDetails && (
+        <InfoContainer item xs={4}>
+          <PodcastInfo
+            title={
+              podcastDetails ? podcastDetails.infoDetails.collectionName : ""
+            }
+            subtitle={
+              podcastDetails ? podcastDetails.infoDetails.artistName : ""
+            }
+            image={
+              podcastDetails ? podcastDetails.infoDetails.artworkUrl600 : ""
+            }
+            description={
+              podcastDetails ? podcastDetails.infoDetails.description : ""
+            }
+          />
+        </InfoContainer>
       )}
-    </>
+      {podcastDetails && (
+        <InfoContainer item xs={8}>
+          <EpisodesList
+            episodesList={podcastDetails?.episodesList || []}
+          ></EpisodesList>
+        </InfoContainer>
+      )}
+    </ContentContainer>
   );
 };
 export default Details;

@@ -39,7 +39,7 @@ const EpisodesList = ({ episodesList = [] }) => {
 
   return (
     <ContentContainer>
-      <HeaderContainer> Episodes: {episodesList.length}</HeaderContainer>
+      <HeaderContainer> Episodes: {episodesList.length - 1}</HeaderContainer>
       <InfoContainer>
         <StyledTableContainer>
           <Table stickyHeader>
