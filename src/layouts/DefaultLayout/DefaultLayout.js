@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { Outlet } from "react-router-dom";
 import useFetch from "react-fetch-hook";
-import { useParams } from "react-router-dom";
 
 //context
 import { InfoContext } from "../../helpers/InfoContext";
@@ -13,10 +12,15 @@ import useFetchEpisode from "../../hooks/useFetchEpisode";
 
 const DefaultLayout = () => {
   const title = "Podcaster";
-  const { podcastId } = useParams();
 
-  const { podcasts, setPodcasts, episodes, setEpisodes, isLoadingEpisode } =
-    useContext(InfoContext);
+  const {
+    podcasts,
+    setPodcasts,
+    episodes,
+    setEpisodes,
+    isLoadingEpisode,
+    setIsLoadingPodcasts,
+  } = useContext(InfoContext);
 
   const { isLoading, data = [] } = useFetch(
     `https://api.allorigins.win/get?url=${encodeURIComponent(
@@ -27,12 +31,15 @@ const DefaultLayout = () => {
     }
   );
 
-  const [episodeData, isLoadingEpisodes] = useFetchEpisode(podcastId ?? null);
+  const [episodeData, isLoadingEpisodes] = useFetchEpisode();
 
   useEffect(() => {
     if (!isLoading && data?.contents) {
+      setIsLoadingPodcasts(isLoading);
       const { entry } = JSON.parse(data.contents).feed;
       setPodcasts(entry);
+    } else {
+      setIsLoadingPodcasts(isLoading);
     }
   }, [isLoading, data]);
 

@@ -1,17 +1,19 @@
 import { useContext } from "react";
 import useFetch from "react-fetch-hook";
+import { useParams } from "react-router-dom";
 
 //context
 import { InfoContext } from "../helpers/InfoContext";
 
-const useFetchEpisode = (podcastId) => {
+const useFetchEpisode = () => {
   const { episodes, setIsLoadingEpisode } = useContext(InfoContext);
+  const { podcastId } = useParams();
 
   let episode = episodes ? episodes[`${podcastId}`] ?? null : null;
 
   const { isLoading, data = [] } = useFetch(
     `https://api.allorigins.win/get?url=${encodeURIComponent(
-      `https://itunes.apple.com/lookup?id=${podcastId}&entity=podcastEpisode`
+      `https://itunes.apple.com/lookup?id=${podcastId}&entity=podcastEpisode&limit=200`
     )}`,
     {
       depends: [episode === null && podcastId != null],

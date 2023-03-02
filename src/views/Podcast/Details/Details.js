@@ -27,6 +27,8 @@ const Details = () => {
       return pod.id.attributes["im:id"] == `${episodesInfo.collectionId}`;
     });
 
+    console.log(episodeData);
+
     podcastDetails = {
       infoDetails: {
         collectionName: episodesInfo.collectionName,
@@ -36,6 +38,10 @@ const Details = () => {
       },
       episodesList: episodeData,
     };
+  }
+
+  if (!episodeData) {
+    <ContentContainer container data-testid="podcastDetails" />;
   }
 
   return (

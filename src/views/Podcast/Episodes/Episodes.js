@@ -18,13 +18,13 @@ const Episodes = () => {
 
   const { podcastId, episodeId } = useParams();
 
-  const stateValues = useContext(InfoContext);
-  const [episodeData, isLoadingEpisodes] = useFetchEpisode(podcastId);
+  const { episodes, isLoadingEpisodes, podcasts } = useContext(InfoContext);
+  let episodeData = episodes ? episodes[`${podcastId}`] ?? null : null;
 
   if (!isLoadingEpisodes && episodeData && episode === null) {
     let episodeInfo = episodeData[0];
 
-    const podcast = stateValues.podcasts.find((pod) => {
+    const podcast = podcasts.find((pod) => {
       return pod.id.attributes["im:id"] == `${episodeInfo.collectionId}`;
     });
 

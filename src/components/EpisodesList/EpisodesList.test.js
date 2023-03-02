@@ -67,6 +67,13 @@ test("Renders EpisodesList table with clickable rows", async () => {
     "href",
     `/podcast/${episodesList[1].collectionId}/episodes/${episodesList[1].trackId}`
   );
+});
+
+test("Renders EpisodesList table with cprrect date and time format", async () => {
+  render(<EpisodesList episodesList={episodesList} />);
+  const element = screen.getByTestId("infoTable");
+
+  const cells = within(element).getAllByRole("cell");
 
   expect(cells[0]).toHaveTextContent(episodesList[1].trackName);
   expect(cells[1]).toHaveTextContent("02/02/2022");
