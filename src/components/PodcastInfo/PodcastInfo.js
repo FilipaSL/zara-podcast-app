@@ -1,4 +1,5 @@
 import React from "react";
+import Linkify from "react-linkify";
 
 import {
   ImgContainer,
@@ -24,7 +25,9 @@ const PodcastInfo = ({ title, subtitle, route, image, description }) => {
       </TopContainer>
       <DescriptionContainer data-testid="descriptionContainer">
         <InfoTitle>Description</InfoTitle>
-        <InfoSubtitle>{description}</InfoSubtitle>
+        <InfoSubtitle>
+          <Linkify>{description}</Linkify>
+        </InfoSubtitle>
       </DescriptionContainer>
     </InfoContainer>
   );

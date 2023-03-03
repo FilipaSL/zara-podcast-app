@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 
 //components
 import { PodcastInfo, EpisodesList } from "../../../components";
@@ -26,8 +26,6 @@ const Details = () => {
     const podcast = podcasts.find((pod) => {
       return pod.id.attributes["im:id"] == `${episodesInfo.collectionId}`;
     });
-
-    console.log(episodeData);
 
     podcastDetails = {
       infoDetails: {

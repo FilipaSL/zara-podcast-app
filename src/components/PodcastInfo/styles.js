@@ -64,7 +64,13 @@ export const InfoTitle = styled.div`
 export const InfoSubtitle = styled.div`
   color: grey;
   font-style: italic;
-  font-size: calc(${cardWidth} / 25); ;
+  font-size: calc(${cardWidth} / 25);
+
+  & a {
+    color: #2f76b3;
+    font-weight: 450;
+    text-decoration: none;
+  }
 `;
 
 export const Title = styled.div`

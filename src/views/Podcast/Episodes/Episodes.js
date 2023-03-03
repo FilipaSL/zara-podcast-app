@@ -5,7 +5,6 @@ import { PodcastInfo, EpisodePlayer } from "../../../components";
 
 //hooks
 import { useParams } from "react-router-dom";
-import useFetchEpisode from "../../../hooks/useFetchEpisode";
 
 //styles
 import { ContentContainer, InfoContainer } from "../styles";
