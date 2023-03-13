@@ -1,12 +1,7 @@
-import { useContext } from "react";
 import useFetch from "react-fetch-hook";
 import { useParams } from "react-router-dom";
 
-//context
-import { InfoContext } from "../helpers/InfoContext";
-
-const useFetchEpisode = () => {
-  const { episodes, setIsLoadingEpisode } = useContext(InfoContext);
+const useFetchEpisode = (episodes, setIsLoadingEpisode) => {
   const { podcastId } = useParams();
 
   let episode = episodes ? episodes[`${podcastId}`] ?? null : null;
@@ -19,13 +14,6 @@ const useFetchEpisode = () => {
       depends: [episode === null && podcastId != null],
     }
   );
-
-  if (isLoading && podcastId != null && episode === null)
-    setIsLoadingEpisode(true);
-
-  if (podcastId != null && !isLoading && data !== null) {
-    setIsLoadingEpisode(false);
-  }
 
   const episodeData = episode
     ? episode

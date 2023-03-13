@@ -20,6 +20,7 @@ const DefaultLayout = () => {
     setEpisodes,
     isLoadingEpisode,
     setIsLoadingPodcasts,
+    setIsLoadingEpisode,
   } = useContext(InfoContext);
 
   const { isLoading, data = [] } = useFetch(
@@ -31,7 +32,10 @@ const DefaultLayout = () => {
     }
   );
 
-  const [episodeData, isLoadingEpisodes] = useFetchEpisode();
+  const [episodeData, isLoadingEpisodes] = useFetchEpisode(
+    episodes,
+    setIsLoadingEpisode
+  );
 
   useEffect(() => {
     if (!isLoading && data?.contents) {
@@ -44,12 +48,16 @@ const DefaultLayout = () => {
   }, [isLoading, data]);
 
   useEffect(() => {
-    if (!isLoadingEpisodes && episodeData) {
+
+    if (!isLoadingEpisodes && episodeData !== null) {
       const newEpisode = {
         [episodeData[0].collectionId]: [...episodeData],
       };
 
       setEpisodes({ ...episodes, ...newEpisode });
+      setIsLoadingEpisode(false);
+    } else if (isLoadingEpisodes) {
+      setIsLoadingEpisode(true);
     }
   }, [isLoadingEpisodes]);
 

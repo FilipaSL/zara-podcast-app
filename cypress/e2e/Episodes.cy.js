@@ -1,5 +1,10 @@
 context("Episodes Page", () => {
   before(() => {
+    cy.visit("/");
+
+    //Wait for fetch to resolves
+    cy.wait(20000);
+
     cy.visit("/podcast/251507798/episodes/1000601464115");
 
     //Wait for fetch to resolves
