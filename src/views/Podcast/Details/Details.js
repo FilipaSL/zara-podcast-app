@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { ContentContainer, InfoContainer } from "../styles";
 
 //context
-import { InfoContext } from "../../../helpers/InfoContext";
+import { InfoContext } from "../../../contexts/InfoContext";
 
 const Details = () => {
   let podcastDetails = null;
@@ -24,7 +24,7 @@ const Details = () => {
     let episodesInfo = episodeData[0];
 
     const podcast = podcasts.find((pod) => {
-      return pod.id.attributes["im:id"] == `${episodesInfo.collectionId}`;
+      return pod.id == `${episodesInfo.collectionId}`;
     });
 
     podcastDetails = {

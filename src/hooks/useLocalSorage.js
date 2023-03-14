@@ -22,6 +22,7 @@ function useLocalStorage(key, timestampKey, initialValue) {
     localStorage.setItem(timestampKey, new Date());
     localStorage.setItem(key, JSON.stringify(value));
   };
+
   return [storedValue, setValue];
 }
 

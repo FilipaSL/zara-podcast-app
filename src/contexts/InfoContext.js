@@ -6,15 +6,6 @@ import useLocalStorage from "../hooks/useLocalSorage";
 export const InfoContext = createContext();
 
 export const InfoProvider = ({ children }) => {
-  //podcasts
-  const [podcasts, setPodcasts] = useLocalStorage(
-    "podcasts",
-    "timestamp",
-    null
-  );
-
-  const [isLoadingPodcasts, setIsLoadingPodcasts] = useState(!podcasts);
-
   //episodes
   const [episodes, setEpisodes] = useLocalStorage(
     "episodes",
@@ -26,11 +17,6 @@ export const InfoProvider = ({ children }) => {
 
   //context values
   const stateValues = {
-    podcasts: podcasts,
-    setPodcasts: setPodcasts,
-    isLoadingPodcasts: isLoadingPodcasts,
-    setIsLoadingPodcasts: setIsLoadingPodcasts,
-
     episodes: episodes,
     setEpisodes: setEpisodes,
     isLoadingEpisode: isLoadingEpisode,
@@ -39,5 +25,22 @@ export const InfoProvider = ({ children }) => {
 
   return (
     <InfoContext.Provider value={stateValues}>{children}</InfoContext.Provider>
+  );
+};
+
+export const PodcastContext = createContext();
+
+export const PodcastProvider = ({ children }) => {
+  //podcasts
+  const [podcasts, setPodcasts] = useLocalStorage(
+    "podcasts",
+    "timestamp",
+    null
+  );
+
+  return (
+    <PodcastContext.Provider value={(podcasts, setPodcasts)}>
+      {children}
+    </PodcastContext.Provider>
   );
 };

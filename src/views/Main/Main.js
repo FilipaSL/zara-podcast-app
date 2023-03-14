@@ -1,47 +1,47 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 //components
 import { CardItem, Search } from "../../components";
 
 //styles
 import { WrapperContainer, ContentContainer, ItemsContainer } from "./styles";
-import { InfoContext } from "../../helpers/InfoContext";
+import useFetchPodcasts from "../../hooks/useFetchPodcasts";
+
+function formatDisplayItems(dataEntries) {
+  return dataEntries
+    ? dataEntries.map((entryItem, index) => (
+        <ItemsContainer key={index} item xs="auto">
+          <CardItem
+            id={entryItem.id}
+            title={entryItem.name}
+            subtitle={entryItem.artist}
+            image={entryItem.image}
+          />
+        </ItemsContainer>
+      ))
+    : null;
+}
 
 const Main = () => {
-  const { podcasts, isLoadingPodcasts } = useContext(InfoContext);
-
-  const formatDisplayItems = (dataEntries) => {
-    return dataEntries
-      ? dataEntries.map((entryItem, index) => (
-          <ItemsContainer key={index} item xs="auto">
-            <CardItem
-              id={entryItem.id.attributes["im:id"]}
-              title={entryItem["im:name"].label}
-              subtitle={entryItem["im:artist"].label}
-              image={entryItem["im:image"][0].label}
-            />
-          </ItemsContainer>
-        ))
-      : null;
-  };
-
-  let [displayItems, setItems] = useState(formatDisplayItems(podcasts));
+  const [isLoading, podcasts] = useFetchPodcasts();
+  const [displayItems, setItems] = useState(podcasts);
 
   const searchFilter = (value) => {
     if (podcasts) {
       const filteredEntries = podcasts.filter(
         (item) =>
-          item["im:name"].label.toLowerCase().includes(value.toLowerCase()) ||
-          item["im:artist"].label.toLowerCase().includes(value.toLowerCase())
+          item.name.toLowerCase().includes(value.toLowerCase()) ||
+          item.artist.toLowerCase().includes(value.toLowerCase())
       );
-
-      setItems(formatDisplayItems(filteredEntries));
+      setItems(filteredEntries);
     }
   };
 
   useEffect(() => {
-    setItems(formatDisplayItems(podcasts));
-  }, [isLoadingPodcasts]);
+    if (podcasts) {
+      setItems(podcasts);
+    }
+  }, [podcasts]);
 
   return (
     <WrapperContainer data-testid="main">
@@ -50,7 +50,9 @@ const Main = () => {
         searchFilter={searchFilter}
       />
 
-      <ContentContainer container>{displayItems || <></>}</ContentContainer>
+      <ContentContainer container>
+        {formatDisplayItems(displayItems) || <></>}
+      </ContentContainer>
     </WrapperContainer>
   );
 };

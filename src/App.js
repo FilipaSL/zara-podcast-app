@@ -2,7 +2,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 //context
-import { InfoProvider } from "./helpers/InfoContext";
+import { InfoProvider } from "./contexts/InfoContext";
 
 //layout
 import DefaultLayout from "./layouts";
