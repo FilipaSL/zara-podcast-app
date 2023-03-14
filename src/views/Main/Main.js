@@ -23,7 +23,7 @@ function formatDisplayItems(dataEntries) {
 }
 
 const Main = () => {
-  const [isLoading, podcasts] = useFetchPodcasts();
+  const [podcasts] = useFetchPodcasts();
   const [displayItems, setItems] = useState(podcasts);
 
   const searchFilter = (value) => {

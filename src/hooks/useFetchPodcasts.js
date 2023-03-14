@@ -1,9 +1,12 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import useFetch from "react-fetch-hook";
+import { InfoContext } from "../contexts/InfoContext";
 import { parsePodcastList } from "../utils";
 import useLocalStorage from "./useLocalSorage";
 
 const useFetchPodcasts = () => {
+  const { setIsLoadingPodcasts } = useContext(InfoContext);
+
   const [podcasts, setPodcasts] = useLocalStorage(
     "podcasts",
     "timestamp",
@@ -23,7 +26,11 @@ const useFetchPodcasts = () => {
     if (data !== null) setPodcasts(parsePodcastList(data));
   }, [data]);
 
-  return [isLoading, podcasts];
+  useEffect(() => {
+    setIsLoadingPodcasts(isLoading);
+  }, [isLoading]);
+
+  return [podcasts];
 };
 
 export default useFetchPodcasts;

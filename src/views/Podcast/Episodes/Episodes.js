@@ -1,33 +1,28 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 
 //components
 import { PodcastInfo, EpisodePlayer } from "../../../components";
 
 //hooks
 import { useParams } from "react-router-dom";
+import useFetchEpisode from "../../../hooks/useFetchEpisode";
 
 //styles
 import { ContentContainer, InfoContainer } from "../styles";
 
-//context
-import { InfoContext } from "../../../contexts/InfoContext";
-
 const Episodes = () => {
-  const [episode, setEpisode] = useState(null);
-
+  let episode = null;
   const { podcastId, episodeId } = useParams();
+  const [episodes] = useFetchEpisode(podcastId);
 
-  const { episodes, isLoadingEpisodes, podcasts } = useContext(InfoContext);
-  let episodeData = episodes ? episodes[`${podcastId}`] ?? null : null;
+  if (episodes && episode === null) {
+    let episodeInfo = episodes[0];
 
-  if (!isLoadingEpisodes && episodeData && episode === null) {
-    let episodeInfo = episodeData[0];
+    // const podcast = podcasts.find((pod) => {
+    //   return pod.id == `${episodeInfo.collectionId}`;
+    // });
 
-    const podcast = podcasts.find((pod) => {
-      return pod.id == `${episodeInfo.collectionId}`;
-    });
-
-    const desiredEpisode = episodeData.find((episode) => {
+    const desiredEpisode = episodes.find((episode) => {
       return episode.trackId == episodeId;
     });
 
@@ -37,11 +32,11 @@ const Episodes = () => {
         collectionName: episodeInfo.collectionName,
         artistName: episodeInfo.artistName,
         artworkUrl600: episodeInfo.artworkUrl600,
-        description: podcast.summary?.label,
+        description: " podcast.summary?.label",
       },
       target: desiredEpisode,
     };
-    setEpisode(episodeDetails);
+    episode = episodeDetails;
   }
 
   return (

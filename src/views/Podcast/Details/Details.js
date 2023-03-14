@@ -1,45 +1,44 @@
-import React, { useContext } from "react";
+import React from "react";
 
 //components
 import { PodcastInfo, EpisodesList } from "../../../components";
 
 //hooks
 import { useParams } from "react-router-dom";
+import useFetchEpisode from "../../../hooks/useFetchEpisode";
 
 //styles
 import { ContentContainer, InfoContainer } from "../styles";
 
 //context
-import { InfoContext } from "../../../contexts/InfoContext";
 
 const Details = () => {
   let podcastDetails = null;
 
   const { podcastId } = useParams();
-  const { episodes, podcasts } = useContext(InfoContext);
 
-  let episodeData = episodes ? episodes[`${podcastId}`] ?? null : null;
+  const [episodes] = useFetchEpisode(podcastId);
 
-  if (episodeData && podcastDetails === null) {
-    let episodesInfo = episodeData[0];
+  if (episodes && podcastDetails === null) {
+    let episodesInfo = episodes[0];
 
-    const podcast = podcasts.find((pod) => {
-      return pod.id == `${episodesInfo.collectionId}`;
-    });
+    // const podcast = podcasts.find((pod) => {
+    //   return pod.id == `${episodesInfo.collectionId}`;
+    // });
 
     podcastDetails = {
       infoDetails: {
         collectionName: episodesInfo.collectionName,
         artistName: episodesInfo.artistName,
         artworkUrl600: episodesInfo.artworkUrl600,
-        description: podcast.summary?.label,
+        description: "podcast.summary?.label",
       },
-      episodesList: episodeData,
+      episodesList: episodes,
     };
   }
 
-  if (!episodeData) {
-    <ContentContainer container data-testid="podcastDetails" />;
+  if (!episodes) {
+    return <ContentContainer container data-testid="podcastDetails" />;
   }
 
   return (
