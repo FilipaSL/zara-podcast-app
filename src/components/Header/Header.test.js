@@ -1,33 +1,50 @@
-import { render, screen, within } from "@testing-library/react";
+import React from "react";
+import { render, screen } from "@testing-library/react";
 import Header from "./Header";
+import { BrowserRouter } from "react-router-dom";
 
-test("Renders Header with Loading", () => {
-  render(<Header isLoading={true} />);
-  const element = screen.getByTestId("header");
-  expect(element).toBeInTheDocument();
+import { InfoContext } from "../../contexts/InfoContext";
 
-  const firstChild = within(element).getByRole("link");
-  expect(firstChild).toBeInTheDocument();
+describe("Header component", () => {
+  it("should render title correctly", () => {
+    const title = "My Podcast App";
+    const contextValues = { isLoadingPodcasts: true, isLoadingEpisode: false };
 
-  const secondChild = within(element).getByTestId("loading");
-  expect(secondChild).toBeInTheDocument();
-});
+    render(
+      <BrowserRouter>
+        <InfoContext.Provider value={contextValues}>
+          <Header title={title} />
+        </InfoContext.Provider>
+      </BrowserRouter>
+    );
+    expect(screen.getByText(title)).toBeInTheDocument();
+  });
 
-test("Renders Header without Loading", () => {
-  render(<Header isLoading={false} />);
-  const element = screen.getByTestId("header");
-  expect(element).toBeInTheDocument();
+  it("should render loading indicator when podcasts or episode are loading", () => {
+    const contextValues = { isLoadingPodcasts: true, isLoadingEpisode: false };
 
-  const firstChild = within(element).getByRole("link");
-  expect(firstChild).toBeInTheDocument();
+    render(
+      <BrowserRouter>
+        <InfoContext.Provider value={contextValues}>
+          <Header title="My Podcast App" />
+        </InfoContext.Provider>
+      </BrowserRouter>
+    );
+    const loadingIndicator = screen.getByTestId("loading");
+    expect(loadingIndicator).toBeInTheDocument();
+  });
 
-  expect(within(element).queryByTestId("loading")).not.toBeInTheDocument();
-});
+  it("should not render loading indicator when podcasts and episode are not loading", () => {
+    const contextValues = { isLoadingPodcasts: false, isLoadingEpisode: false };
 
-test("Click on container will trigger navigate", async () => {
-  const route = "/";
-
-  render(<Header route={route} />);
-
-  expect(screen.getByRole("link")).toHaveAttribute("href", route);
+    render(
+      <BrowserRouter>
+        <InfoContext.Provider value={contextValues}>
+          <Header title="My Podcast App" />
+        </InfoContext.Provider>
+      </BrowserRouter>
+    );
+    const loadingIndicator = screen.queryByTestId("loading");
+    expect(loadingIndicator).not.toBeInTheDocument();
+  });
 });

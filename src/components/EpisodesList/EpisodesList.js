@@ -33,6 +33,7 @@ const EpisodesList = ({ episodesList = [] }) => {
                 <StyledTableRow key={index}>
                   <TableCell>
                     <StyledLink
+                      data-testid="link"
                       to={{
                         pathname: `/podcast/${episode.collectionId}/episodes/${episode.trackId}`,
                       }}

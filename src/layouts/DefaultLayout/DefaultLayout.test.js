@@ -2,7 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import DefaultLayout from "./DefaultLayout";
 
-import { InfoProvider } from "../../helpers/InfoContext";
+import { InfoProvider } from "../../contexts/InfoContext";
 
 test("Renders DefaultLayout with correct structure", () => {
   render(

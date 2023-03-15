@@ -3,7 +3,7 @@ context("Main Page", () => {
     cy.visit("/");
 
     //Wait for fetch to resolves
-    cy.wait(30000);
+    cy.wait(20000);
   });
 
   describe("The Main Page", () => {

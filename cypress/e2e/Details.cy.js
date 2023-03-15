@@ -1,14 +1,9 @@
 context("Details Page", () => {
   before(() => {
-    cy.visit("/");
-
-    //Wait for fetch to resolves
-    cy.wait(20000);
-
     cy.visit("/podcast/251507798");
 
     //Wait for fetch to resolves
-    cy.wait(5000);
+    cy.wait(20000);
   });
 
   describe("The Details Page", () => {

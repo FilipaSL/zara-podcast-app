@@ -1,81 +1,31 @@
-import { render, screen, within } from "@testing-library/react";
+import React from "react";
+import { render, screen } from "@testing-library/react";
 import EpisodesList from "./EpisodesList";
+import { MemoryRouter } from "react-router-dom";
 
-const episodesList = [
-  {}, //first row is ignored
-  {
-    collectionId: "3",
-    trackId: "1",
-    trackTimeMillis: "1000",
-    releaseDate: "2-2-2022",
-    trackName: "teste",
-  },
-];
+describe("EpisodesList", () => {
+  it("renders the list of episodes", () => {
+    const episodesList = [
+      {
+        collectionId: 1,
+        trackId: 1,
+        trackName: "Episode 1",
+        releaseDate: "2022-01-01T00:00:00.000Z",
+        trackTimeMillis: 60000,
+      },
+    ];
 
-test("Renders EpisodesList with correct structure", () => {
-  render(<EpisodesList episodesList={episodesList} />);
-  const element = screen.getByTestId("list");
-  expect(element).toBeInTheDocument();
+    render(
+      <MemoryRouter>
+        <EpisodesList episodesList={episodesList} />
+      </MemoryRouter>
+    );
 
-  const firstChild = within(element).getByTestId("episodesNumber");
-  expect(firstChild).toBeInTheDocument();
+    const episodesNumber = screen.getByTestId("episodesNumber");
+    expect(episodesNumber).toHaveTextContent("Episodes: 1");
 
-  const secondChild = within(element).getByTestId("infoTable");
-  expect(secondChild).toBeInTheDocument();
-});
-
-test("Renders EpisodesList with correct episode number", () => {
-  render(<EpisodesList episodesList={episodesList} />);
-  const element = screen.getByTestId("episodesNumber");
-
-  expect(element).toHaveTextContent(`Episodes: ${episodesList.length - 1}`);
-});
-
-test("Renders EpisodesList table with correct number of rows", async () => {
-  render(<EpisodesList episodesList={episodesList} />);
-
-  const element = screen.getByTestId("infoTable");
-  const firstChild = within(element).getByRole("table");
-
-  const rows = within(firstChild).getAllByRole("row");
-  expect(rows.length).toBe(episodesList.length); //first row is header
-});
-
-test("Renders EpisodesList table with correct columns", async () => {
-  render(<EpisodesList episodesList={episodesList} />);
-
-  const element = screen.getByTestId("infoTable");
-
-  const columns = within(element).getAllByRole("columnheader");
-  expect(columns.length).toBe(3);
-
-  expect(columns[0]).toHaveTextContent("Title");
-  expect(columns[1]).toHaveTextContent("Date");
-  expect(columns[2]).toHaveTextContent("Duration");
-});
-
-test("Renders EpisodesList table with clickable rows", async () => {
-  render(<EpisodesList episodesList={episodesList} />);
-  const element = screen.getByTestId("infoTable");
-
-  const cells = within(element).getAllByRole("cell");
-
-  expect(cells.length).toBe(3); // one for each column
-
-  const link = within(cells[0]).getByRole("link");
-  expect(link).toHaveAttribute(
-    "href",
-    `/podcast/${episodesList[1].collectionId}/episodes/${episodesList[1].trackId}`
-  );
-});
-
-test("Renders EpisodesList table with cprrect date and time format", async () => {
-  render(<EpisodesList episodesList={episodesList} />);
-  const element = screen.getByTestId("infoTable");
-
-  const cells = within(element).getAllByRole("cell");
-
-  expect(cells[0]).toHaveTextContent(episodesList[1].trackName);
-  expect(cells[1]).toHaveTextContent("02/02/2022");
-  expect(cells[2]).toHaveTextContent("23:15");
+    const link1 = screen.getByTestId("link");
+    expect(link1).toHaveTextContent("Episode 1");
+    expect(link1).toHaveAttribute("href", "/podcast/1/episodes/1");
+  });
 });

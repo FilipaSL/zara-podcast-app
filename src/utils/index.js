@@ -15,7 +15,7 @@ export const parsePodcastList = (list) => {
 };
 
 export const filterPodcastDescription = (id, podcasts) => {
-  return podcasts.find((pod) => pod.id == id)?.description;
+  return podcasts.find((pod) => pod.id == id)?.description || null;
 };
 
 export const formatEpisodeInfo = (episodeInfo, desiredEpisode) => {

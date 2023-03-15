@@ -1,9 +1,14 @@
 import { render, screen, within } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
 
 import PodcastInfo from "./PodcastInfo";
 
 test("Renders PodcastInfo with correct structure", () => {
-  render(<PodcastInfo route="/" />);
+  render(
+    <BrowserRouter>
+      <PodcastInfo route="/" />
+    </BrowserRouter>
+  );
   const element = screen.getByTestId("podcastInfo");
   expect(element).toBeInTheDocument();
 
@@ -24,7 +29,11 @@ test("Renders PodcastInfo with correct structure", () => {
 test("Click on container will trigger navigate", async () => {
   const route = "/podcast/7";
 
-  render(<PodcastInfo route={route} />);
+  render(
+    <BrowserRouter>
+      <PodcastInfo route={route} />
+    </BrowserRouter>
+  );
 
   expect(screen.getByTestId("containerRoute")).toHaveAttribute("href", route);
 });
