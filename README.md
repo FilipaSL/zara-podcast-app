@@ -1,6 +1,6 @@
 # Podcast App
 
-This is a React-based Small single page web application for listening to podcasts. It includes various libraries and tools, including React, React Router, Material-UI, Cypress, and more. Allows allows user to search for the desired podcast and choose a episode to listen to from a list of that podcast's 200 more recent episodes.
+This is a React-based small Single Page web Application for listening to podcasts. It includes various libraries and tools, including React, React Router, Material-UI, Cypress, and more. Allows users to search for the desired podcast and choose a episode to listen to from a list of that podcast's 200 more recent episodes.
 
 **Note: some warnings can appear on your browser console due to recent React updates, or due to the way this app does it's error handling**
 
