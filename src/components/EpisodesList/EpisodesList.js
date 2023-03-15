@@ -13,34 +13,10 @@ import {
 } from "./styles";
 
 const EpisodesList = ({ episodesList = [] }) => {
-  const displayEpisodes = episodesList.map((episode, index) => {
-    const formatedDuration = new Date(episode.trackTimeMillis);
-    const formatedDate = new Date(episode.releaseDate);
-
-    if (index > 0) {
-      return (
-        <StyledTableRow key={index}>
-          <TableCell>
-            <StyledLink
-              href={`/podcast/${episode.collectionId}/episodes/${episode.trackId}`}
-            >
-              {episode.trackName}
-            </StyledLink>
-          </TableCell>
-          <TableCell>{`${formatedDate.toLocaleString("en-GB", {
-            dateStyle: "short",
-          })}`}</TableCell>
-          <TableCell>{`${formatedDuration.getMinutes()}:${formatedDuration.getSeconds()}`}</TableCell>
-        </StyledTableRow>
-      );
-    }
-    return null;
-  });
-
   return (
     <ContentContainer data-testid="list">
       <HeaderContainer data-testid="episodesNumber">
-        Episodes: {episodesList.length - 1}
+        Episodes: {episodesList.length}
       </HeaderContainer>
       <InfoContainer data-testid="infoTable">
         <StyledTableContainer>
@@ -52,7 +28,32 @@ const EpisodesList = ({ episodesList = [] }) => {
                 <TableCell>Duration</TableCell>
               </StyledTableRow>
             </TableHead>
-            <TableBody>{displayEpisodes}</TableBody>
+            <TableBody>
+              {episodesList.map((episode, index) => (
+                <StyledTableRow key={index}>
+                  <TableCell>
+                    <StyledLink
+                      to={{
+                        pathname: `/podcast/${episode.collectionId}/episodes/${episode.trackId}`,
+                      }}
+                    >
+                      {episode.trackName}
+                    </StyledLink>
+                  </TableCell>
+                  <TableCell>{`${new Date(episode.releaseDate).toLocaleString(
+                    "en-GB",
+                    {
+                      dateStyle: "short",
+                    }
+                  )}`}</TableCell>
+                  <TableCell>{`${new Date(
+                    episode.trackTimeMillis
+                  ).getMinutes()}:${new Date(
+                    episode.trackTimeMillis
+                  ).getSeconds()}`}</TableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
           </Table>
         </StyledTableContainer>
       </InfoContainer>

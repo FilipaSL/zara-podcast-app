@@ -21,7 +21,7 @@ const EpisodePlayer = ({ title, description, sound }) => {
         </Subtitle>
       </TextContainer>
       <PlayerContainer data-testid="player">
-        <ReactAudioPlayer src={sound} controls></ReactAudioPlayer>
+        <ReactAudioPlayer width="100%" src={sound} controls></ReactAudioPlayer>
       </PlayerContainer>
     </ContentContainer>
   );

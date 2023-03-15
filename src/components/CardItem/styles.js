@@ -3,10 +3,11 @@ import styled from "styled-components";
 
 // external components
 import { Card } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const cardWidth = "15vw";
 
-export const ContentContainer = styled.div`
+export const ContentContainer = styled(Link)`
   display: flex;
   position: relative;
   margin: 2rem 1rem;
@@ -14,6 +15,7 @@ export const ContentContainer = styled.div`
   height: fit-content;
   width: fit-content;
   cursor: pointer;
+  text-decoration: none;
 `;
 
 export const InfoContainer = styled(Card)`

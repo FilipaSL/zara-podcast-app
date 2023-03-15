@@ -2,16 +2,12 @@ import { useContext, useEffect } from "react";
 import useFetch from "react-fetch-hook";
 import { InfoContext } from "../contexts/InfoContext";
 import { parsePodcastList } from "../utils";
-import useLocalStorage from "./useLocalSorage";
+import useLocalStorage from "./useLocalStorage";
 
 const useFetchPodcasts = () => {
   const { setIsLoadingPodcasts } = useContext(InfoContext);
 
-  const [podcasts, setPodcasts] = useLocalStorage(
-    "podcasts",
-    "timestamp",
-    null
-  );
+  const [podcasts, setPodcasts] = useLocalStorage("podcasts", null);
 
   const { isLoading, data = null } = useFetch(
     `https://api.allorigins.win/get?url=${encodeURIComponent(
@@ -30,7 +26,7 @@ const useFetchPodcasts = () => {
     setIsLoadingPodcasts(isLoading);
   }, [isLoading]);
 
-  return [podcasts];
+  return [podcasts?.data || null];
 };
 
 export default useFetchPodcasts;

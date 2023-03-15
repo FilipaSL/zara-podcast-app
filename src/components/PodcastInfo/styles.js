@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 // external components
 import { Card } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const cardWidth = "20vw";
 
@@ -86,7 +87,7 @@ export const Subtitle = styled.div`
   font-size: calc(${cardWidth} / 25); ;
 `;
 
-export const TopContainer = styled.a`
+export const TopContainer = styled(Link)`
   display: flex;
   height: fit-content;
   justify-content: center;

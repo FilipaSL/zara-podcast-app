@@ -11,7 +11,7 @@ const Header = ({ title }) => {
 
   return (
     <HeaderContainer data-testid="header">
-      <HeaderTitle href="/">{title}</HeaderTitle>
+      <HeaderTitle to={{ pathname: "/" }}>{title}</HeaderTitle>
       <>
         {(isLoadingPodcasts || isLoadingEpisode) && (
           <CircularProgress data-testid="loading" size={18} />

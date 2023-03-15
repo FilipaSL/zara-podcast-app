@@ -8,18 +8,20 @@ import { WrapperContainer, ContentContainer, ItemsContainer } from "./styles";
 import useFetchPodcasts from "../../hooks/useFetchPodcasts";
 
 function formatDisplayItems(dataEntries) {
-  return dataEntries
-    ? dataEntries.map((entryItem, index) => (
-        <ItemsContainer key={index} item xs="auto">
-          <CardItem
-            id={entryItem.id}
-            title={entryItem.name}
-            subtitle={entryItem.artist}
-            image={entryItem.image}
-          />
-        </ItemsContainer>
-      ))
-    : null;
+  return dataEntries ? (
+    dataEntries.map((entryItem, index) => (
+      <ItemsContainer key={index} item xs="auto">
+        <CardItem
+          id={entryItem.id}
+          title={entryItem.name}
+          subtitle={entryItem.artist}
+          image={entryItem.image}
+        />
+      </ItemsContainer>
+    ))
+  ) : (
+    <></>
+  );
 }
 
 const Main = () => {
@@ -51,7 +53,7 @@ const Main = () => {
       />
 
       <ContentContainer container>
-        {formatDisplayItems(displayItems) || <></>}
+        {formatDisplayItems(displayItems)}
       </ContentContainer>
     </WrapperContainer>
   );

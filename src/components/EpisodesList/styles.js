@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 // external components
 import { Card, TableRow, TableContainer } from "@mui/material";
-
+import { Link } from "react-router-dom";
 export const StyledTableRow = styled(TableRow)(() => ({
   "&:nth-of-type(odd)": {
     backgroundColor: "#F2F2F2",
@@ -17,7 +17,7 @@ export const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-export const StyledLink = styled.a`
+export const StyledLink = styled(Link)`
   color: #738eac;
   text-decoration: none;
   font-weight: 600;

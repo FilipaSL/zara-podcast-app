@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 import {
   ContentContainer,
@@ -11,14 +10,12 @@ import {
 } from "./styles";
 
 const CardItem = ({ id, title, subtitle, image }) => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate(`podcast/${id}`);
-  };
-
   return (
-    <ContentContainer key={`${id}`} data-testid="card" onClick={handleClick}>
+    <ContentContainer
+      key={`${id}`}
+      data-testid="card"
+      to={{ pathname: `podcast/${id}` }}
+    >
       <ImgContainer src={image} alt="logo" />
       <InfoContainer>
         <TextContainer>

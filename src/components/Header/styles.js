@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 // external components
 import { Container } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const HeaderContainer = styled(Container)`
   display: flex !important;
@@ -14,7 +15,7 @@ export const HeaderContainer = styled(Container)`
   border-bottom: 1px solid lightGrey;
 `;
 
-export const HeaderTitle = styled.a`
+export const HeaderTitle = styled(Link)`
   color: #2f76b3;
   font-weight: 700;
 

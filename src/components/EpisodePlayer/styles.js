@@ -27,6 +27,10 @@ export const PlayerContainer = styled.div`
   align-items: center;
   justify-content-center;
   margin: 1vh 1vw;
+
+  & audio {
+    width: 100%
+  }
 `;
 
 export const Title = styled.div`

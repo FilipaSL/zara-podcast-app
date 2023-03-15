@@ -1,4 +1,5 @@
 import Main from "./Main";
-import { Details, Episodes } from "./Podcast";
+import Episodes from "./Episodes";
+import Details from "./Details";
 
 export { Main, Details, Episodes };

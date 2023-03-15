@@ -1,19 +1,14 @@
 import { useEffect, useContext } from "react";
-
 import useFetch from "react-fetch-hook";
-import useLocalStorage from "./useLocalSorage";
+import useLocalStorage from "./useLocalStorage";
+
+//context
 import { InfoContext } from "../contexts/InfoContext";
 
 const useFetchEpisode = (podcastId) => {
   const { setIsLoadingEpisode } = useContext(InfoContext);
 
-  const [episodes, setEpisodes] = useLocalStorage(
-    `episode-${podcastId}`,
-    `episode-${podcastId}-timestamp`,
-    null
-  );
-
-  let episode = episodes ? episodes[`${podcastId}`] ?? null : null;
+  const [episode, setEpisode] = useLocalStorage(`episodes-${podcastId}`, null);
 
   const { isLoading, data = null } = useFetch(
     `https://api.allorigins.win/get?url=${encodeURIComponent(
@@ -26,12 +21,7 @@ const useFetchEpisode = (podcastId) => {
 
   useEffect(() => {
     if (data !== null) {
-      const episodeData = episode
-        ? episode
-        : JSON.parse(data?.contents || JSON.stringify({ results: null }))
-            ?.results;
-
-      setEpisodes(episodeData);
+      setEpisode(JSON.parse(data?.contents)?.results);
     }
   }, [data]);
 
@@ -39,7 +29,7 @@ const useFetchEpisode = (podcastId) => {
     setIsLoadingEpisode(isLoading);
   }, [isLoading]);
 
-  return [episodes];
+  return [episode?.data || null];
 };
 
 export default useFetchEpisode;
