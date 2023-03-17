@@ -1,8 +1,8 @@
 import React, { createContext, useState } from "react";
 
-export const InfoContext = createContext();
+export const LoadingContext = createContext();
 
-export const InfoProvider = ({ children }) => {
+export const LoadingProvider = ({ children }) => {
   const [isLoadingPodcasts, setIsLoadingPodcasts] = useState(false);
   const [isLoadingEpisode, setIsLoadingEpisode] = useState(false);
 
@@ -15,6 +15,8 @@ export const InfoProvider = ({ children }) => {
   };
 
   return (
-    <InfoContext.Provider value={stateValues}>{children}</InfoContext.Provider>
+    <LoadingContext.Provider value={stateValues}>
+      {children}
+    </LoadingContext.Provider>
   );
 };

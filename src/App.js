@@ -2,7 +2,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 //context
-import { InfoProvider } from "./contexts/InfoContext";
+import { LoadingProvider } from "./contexts/LoadingContext";
 
 //layout
 import DefaultLayout from "./layouts";
@@ -12,7 +12,7 @@ import { Main, Details, Episodes } from "./views";
 
 function App() {
   return (
-    <InfoProvider>
+    <LoadingProvider>
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<Main />} />
@@ -24,7 +24,7 @@ function App() {
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </InfoProvider>
+    </LoadingProvider>
   );
 }
 

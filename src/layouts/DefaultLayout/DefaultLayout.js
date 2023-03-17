@@ -6,11 +6,9 @@ import { Container } from "@mui/material";
 import { Header } from "../../components";
 
 const DefaultLayout = () => {
-  const title = "Podcaster";
-
   return (
     <Container data-testid="layout">
-      <Header title={title} isLoading={true} />
+      <Header />
       <Outlet />
     </Container>
   );

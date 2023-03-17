@@ -7,23 +7,6 @@ import { CardItem, Search } from "../../components";
 import { WrapperContainer, ContentContainer, ItemsContainer } from "./styles";
 import useFetchPodcasts from "../../hooks/useFetchPodcasts";
 
-function formatDisplayItems(dataEntries) {
-  return dataEntries ? (
-    dataEntries.map((entryItem, index) => (
-      <ItemsContainer key={index} item xs="auto">
-        <CardItem
-          id={entryItem.id}
-          title={entryItem.name}
-          subtitle={entryItem.artist}
-          image={entryItem.image}
-        />
-      </ItemsContainer>
-    ))
-  ) : (
-    <></>
-  );
-}
-
 const Main = () => {
   const [podcasts] = useFetchPodcasts();
   const [displayItems, setItems] = useState(podcasts);
@@ -48,12 +31,25 @@ const Main = () => {
   return (
     <WrapperContainer data-testid="main">
       <Search
-        numberOfResults={displayItems?.length | 0}
+        numberOfResults={displayItems?.length}
         searchFilter={searchFilter}
       />
 
       <ContentContainer container>
-        {formatDisplayItems(displayItems)}
+        {displayItems ? (
+          displayItems.map((entryItem, index) => (
+            <ItemsContainer key={index} item xs="auto">
+              <CardItem
+                id={entryItem.id}
+                title={entryItem.name}
+                subtitle={entryItem.artist}
+                image={entryItem.image}
+              />
+            </ItemsContainer>
+          ))
+        ) : (
+          <></>
+        )}
       </ContentContainer>
     </WrapperContainer>
   );

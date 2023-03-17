@@ -1,11 +1,11 @@
 import { useContext, useEffect } from "react";
 import useFetch from "react-fetch-hook";
-import { InfoContext } from "../contexts/InfoContext";
+import { LoadingContext } from "../contexts/LoadingContext";
 import { parsePodcastList } from "../utils";
 import useLocalStorage from "./useLocalStorage";
 
 const useFetchPodcasts = () => {
-  const { setIsLoadingPodcasts } = useContext(InfoContext);
+  const { setIsLoadingPodcasts } = useContext(LoadingContext);
 
   const [podcasts, setPodcasts] = useLocalStorage("podcasts", null);
 

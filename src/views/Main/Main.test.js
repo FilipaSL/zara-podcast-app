@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import Main from "./Main";
 
-import { InfoProvider } from "../../contexts/InfoContext";
+import { InfoProvider } from "../../contexts/LoadingContext";
 
 test("Renders Main with correct structure", () => {
   render(

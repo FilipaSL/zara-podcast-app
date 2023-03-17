@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Details from "./Details";
 
-import { InfoProvider } from "../../contexts/InfoContext";
+import { InfoProvider } from "../../contexts/LoadingContext";
 
 test("Renders Details with correct structure", () => {
   render(

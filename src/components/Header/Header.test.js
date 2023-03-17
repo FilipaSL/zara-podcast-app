@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import Header from "./Header";
 import { BrowserRouter } from "react-router-dom";
 
-import { InfoContext } from "../../contexts/InfoContext";
+import { LoadingContext } from "../../contexts/LoadingContext";
 
 describe("Header component", () => {
   it("should render title correctly", () => {
@@ -12,9 +12,9 @@ describe("Header component", () => {
 
     render(
       <BrowserRouter>
-        <InfoContext.Provider value={contextValues}>
+        <LoadingContext.Provider value={contextValues}>
           <Header title={title} />
-        </InfoContext.Provider>
+        </LoadingContext.Provider>
       </BrowserRouter>
     );
     expect(screen.getByText(title)).toBeInTheDocument();
@@ -25,9 +25,9 @@ describe("Header component", () => {
 
     render(
       <BrowserRouter>
-        <InfoContext.Provider value={contextValues}>
+        <LoadingContext.Provider value={contextValues}>
           <Header title="My Podcast App" />
-        </InfoContext.Provider>
+        </LoadingContext.Provider>
       </BrowserRouter>
     );
     const loadingIndicator = screen.getByTestId("loading");
@@ -39,9 +39,9 @@ describe("Header component", () => {
 
     render(
       <BrowserRouter>
-        <InfoContext.Provider value={contextValues}>
+        <LoadingContext.Provider value={contextValues}>
           <Header title="My Podcast App" />
-        </InfoContext.Provider>
+        </LoadingContext.Provider>
       </BrowserRouter>
     );
     const loadingIndicator = screen.queryByTestId("loading");

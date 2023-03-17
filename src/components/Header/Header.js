@@ -4,14 +4,14 @@ import React, { useContext } from "react";
 import { CircularProgress } from "@mui/material";
 
 import { HeaderContainer, HeaderTitle } from "./styles";
-import { InfoContext } from "../../contexts/InfoContext";
+import { LoadingContext } from "../../contexts/LoadingContext";
 
-const Header = ({ title }) => {
-  const { isLoadingPodcasts, isLoadingEpisode } = useContext(InfoContext);
+const Header = () => {
+  const { isLoadingPodcasts, isLoadingEpisode } = useContext(LoadingContext);
 
   return (
     <HeaderContainer data-testid="header">
-      <HeaderTitle to={{ pathname: "/" }}>{title}</HeaderTitle>
+      <HeaderTitle to={{ pathname: "/" }}>Podcaster</HeaderTitle>
       <>
         {(isLoadingPodcasts || isLoadingEpisode) && (
           <CircularProgress data-testid="loading" size={18} />
